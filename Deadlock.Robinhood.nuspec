@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-  <metadata schemaVersion="2">
+<package>
+  <metadata>
     <id>Deadlock.Robinhood</id>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1</version>
     <title>Deadlock Robinhood Client</title>
     <authors>Thiago Amarante</authors>
     <owners>Thiago Amarante</owners>
@@ -14,21 +14,22 @@
       Free stock trading.
       Stop paying up to $10 for every trade.
       Robinhood Client is the way you manage your account via api with C#.
+      Disclaimer: This is an unofficial client package.
+      I'm not affiliated with the folks at Robinhood Markets Inc.
     </description>
     <summary>Manager your Robinhood account via api with C#</summary>
     <tags>trade robinhood stock</tags>
     <iconUrl>http://static1.squarespace.com/static/53fe4a70e4b0a2293ab0e42a/t/53fe4b7ce4b03ae33c17c7d2/1456874970760/?format=64w</iconUrl>
-    <dependencies>
-      <dependency id="Newtonsoft.Json" version="8.0.1" />
+    <dependencies>      
+      <dependency id="Newtonsoft.Json" version="8.0.2" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Core"/>
       <frameworkAssembly assemblyName="System"/>
-      <frameworkAssembly assemblyName="System.Net.Http"/>
-      <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework=".NETFramework4.0-Client, .NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.Net.Http"/>      
     </frameworkAssemblies>
     <releaseNotes>
-      (*) Release 1.0.0.0
+      (*) Release 1.0.0.1
       - Login
       - Get User
       - Get Accounts
