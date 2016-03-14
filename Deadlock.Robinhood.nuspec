@@ -1,24 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package>
-  <metadata>
+  <metadata minClientVersion="3.0.0">
     <id>Deadlock.Robinhood</id>
-    <version>1.0.0.5</version>
+    <version>1.0.1</version>
     <title>Deadlock Robinhood Client</title>
     <authors>Thiago Amarante</authors>
-    <owners>Thiago Amarante</owners>
+    <owners>thiagoamarante</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
     <projectUrl>https://github.com/thiagoamarante/Deadlock.Robinhood</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>
-      Robinhood
-      Free stock trading.
-      Stop paying up to $10 for every trade.
-      Robinhood Client is the way you manage your account via api with C#.
-      Disclaimer: This is an unofficial client package. I'm not affiliated with the folks at Robinhood Markets Inc.
-    </description>
+    <description>Robinhood Client is the way you manage your account via api with C#. Disclaimer: This is an unofficial client package. I'm not affiliated with the folks at Robinhood Markets Inc.</description>
     <summary>Manager your Robinhood account via api with C#</summary>
     <tags>trade robinhood stock</tags>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=386613</iconUrl>
+    <language>en-US</language>
     <dependencies>      
       <dependency id="Newtonsoft.Json" version="8.0.2" />
     </dependencies>
