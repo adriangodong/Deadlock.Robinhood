@@ -7,10 +7,10 @@ https://www.npmjs.com/package/robinhood
 ##### GENERATE PACKAGE
 
 .\Tools\NuGet.exe pack .\Deadlock.Robinhood.nuspec
-.\Tools\NuGet.exe pack .\Deadlock.Robinhood.nuspec -Version 1.0.0.1
-.\Tools\NuGet.exe pack Deadlock.Robinhood\Deadlock.Robinhood.csproj -Build -Symbols -Properties Configuration=Release
+//.\Tools\NuGet.exe pack .\Deadlock.Robinhood.nuspec -Version 1.0.0.5
+//.\Tools\NuGet.exe pack Deadlock.Robinhood\Deadlock.Robinhood.csproj -Build -Symbols -Properties Configuration=Release
 
 (*) PUSH PACKAGE
 .\Tools\NuGet.exe setapikey [APIKEY]
-.\Tools\NuGet.exe push Deadlock.Robinhood.1.0.0.1.nupkg
+.\Tools\NuGet.exe push Deadlock.Robinhood.1.0.0.5.nupkg
 
