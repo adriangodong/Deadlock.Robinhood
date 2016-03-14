@@ -9,6 +9,12 @@ namespace Deadlock.Robinhood.Model
 {
     public class Portfolio
     {
+        [JsonProperty("account")]
+        public string Account { get; set; }
+
+        [JsonProperty("url")]
+        public string Url { get; set; }
+
         [JsonProperty("extended_hours_equity")]
         public decimal ExtendedHoursEquity { get; set; }
 
@@ -35,19 +41,5 @@ namespace Deadlock.Robinhood.Model
 
         [JsonProperty("extended_hours_market_value")]
         public decimal ExtendedHoursMarketValue { get; set; }
-
-        //{
-        //    "extended_hours_equity": "xxxxx",
-        //    "url": "https:\/\/api.robinhood.com\/portfolios\/xxxxx\/",
-        //    "adjusted_equity_previous_close": "xxxxx",
-        //    "account": "https:\/\/api.robinhood.com\/accounts\/xxxxx\/",
-        //    "last_core_market_value": "xxxxx",
-        //    "last_core_equity": "xxxxx",
-        //    "excess_margin": "xxxxx",
-        //    "equity": "xxxxx",
-        //    "market_value": "xxxxx",
-        //    "equity_previous_close": "xxxxx",
-        //    "extended_hours_market_value": "xxxxx"
-        //}
     }
 }

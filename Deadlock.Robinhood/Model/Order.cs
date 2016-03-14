@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,15 @@ namespace Deadlock.Robinhood.Model
         [JsonProperty("instrument")]
         public string Instrument { get; set; }
 
+        [JsonProperty("account")]
+        public string Account { get; set; }
+
+        [JsonProperty("url")]
+        public string Url { get; set; }
+
+        [JsonProperty("position")]
+        public string Position { get; set; }
+
         [JsonProperty("state")]
         public string State { get; set; }
 
@@ -58,7 +68,8 @@ namespace Deadlock.Robinhood.Model
         public DateTime CreatedAt { get; set; }
 
         [JsonProperty("side")]
-        public string Side { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Side Side { get; set; }
 
         [JsonProperty("average_price")]
         public decimal AveragePrice { get; set; }

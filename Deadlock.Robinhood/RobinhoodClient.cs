@@ -16,31 +16,13 @@ namespace Deadlock.Robinhood
     public class RobinhoodClient : IDisposable
     {
         #region Fields
-        private readonly string _endpoint_base = "https://api.robinhood.com/";
-
-        private readonly string _endpoint_login = "api-token-auth/";
-
-        private readonly string _endpoint_user = "user/";
-
-        private readonly string _endpoint_accounts = "accounts/";
-
-        private readonly string _endpoint_positions = "accounts/{0}/positions/";
-
-        private readonly string _endpoint_portfolio = "accounts/{0}/portfolio/";
-
-        private readonly string _endpoint_orders = "orders/";
-
-        private readonly string _endpoint_instrument = "instruments/{0}/";
-
-        private readonly string _endpoint_quote = "quotes/{0}/";
-
         private HttpClient _client;
         #endregion
 
         public RobinhoodClient(string token = null)
         {
             _client = new HttpClient();
-            _client.BaseAddress = new Uri(_endpoint_base);
+            _client.BaseAddress = new Uri(UrlManager.Base);
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Add("Accept", "*/*");
             //_client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
@@ -62,7 +44,7 @@ namespace Deadlock.Robinhood
         #region Methods Public
         public async Task<Result<Authentication>> Login(string username, string password)
         {
-            var result = await this.Request<Authentication>(_endpoint_login, Method.Post, new FormUrlEncodedContent(new Dictionary<string, string>()
+            var result = await this.Request<Authentication>(UrlManager.Login, Method.Post, new FormUrlEncodedContent(new Dictionary<string, string>()
             {
                 { "password", password },
                 { "username", username }
@@ -74,38 +56,66 @@ namespace Deadlock.Robinhood
 
         public async Task<Result<User>> User()
         {
-            return await this.Request<User>(_endpoint_user);                     
+            return await this.Request<User>(UrlManager.User);                     
         }
 
         //FALTA
         public async Task<Result<Page<Account>>> Accounts()
         {
-            return await this.Request<Page<Account>>(_endpoint_accounts);            
-        }
-        
-        public async Task<Result<Portfolio>> Portfolio(string accountNumber)
-        {
-            return await this.Request<Portfolio>(string.Format(_endpoint_portfolio, accountNumber));
+            return await this.Request<Page<Account>>(UrlManager.Accounts);            
         }
 
+        #region Methods Portfolios
+        public async Task<Result<Page<Portfolio>>> Portfolios()
+        {
+            return await this.Request<Page<Portfolio>>(UrlManager.Portfolios());
+        }
+
+        public async Task<Result<Portfolio>> Portfolios(string accountNumber)
+        {
+            return await this.Request<Portfolio>(UrlManager.Portfolios(accountNumber));
+        }
+        #endregion
+
+        #region Methods Orders
         public async Task<Result<Page<Order>>> Orders()
         {
-            return await this.Request<Page<Order>>(_endpoint_orders);
+            return await this.Request<Page<Order>>(UrlManager.Orders);
+        }        
+
+        public async Task<Result<Order>> Orders(NewOrder newOrder)
+        {
+            var content = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(newOrder));           
+            var formContent = new FormUrlEncodedContent(content);
+            return await this.Request<Order>(UrlManager.Orders, Method.Post, formContent);
+        }
+
+        public async Task<Result<object>> CancelOrder(string orderNumber)
+        {
+            return await this.Request<object>(UrlManager.CancelOrder(orderNumber), Method.Post);
+        }
+        #endregion
+
+        #region Methods Positions
+        public async Task<Result<Page<Position>>> Positions()
+        {
+            return await this.Request<Page<Position>>(UrlManager.Positions());
         }
 
         public async Task<Result<Page<Position>>> Positions(string accountNumber)
         {
-            return await this.Request<Page<Position>>(string.Format(_endpoint_positions, accountNumber));
+            return await this.Request<Page<Position>>(UrlManager.Positions(accountNumber));
         }
+        #endregion
 
-        public async Task<Result<Instrument>> Instrument(string instrument)
+        public async Task<Result<Instrument>> Instrument(string instrumentNumber)
         {
-            return await this.Request<Instrument>(string.Format(_endpoint_instrument, instrument));
+            return await this.Request<Instrument>(UrlManager.Instrument(instrumentNumber));
         }
 
         public async Task<Result<Quote>> Quote(string symbol)
         {
-            return await this.Request<Quote>(string.Format(_endpoint_quote, symbol));
+            return await this.Request<Quote>(UrlManager.Quotes(symbol.ToUpper()));
         }
 
         public void Dispose()
@@ -137,15 +147,16 @@ namespace Deadlock.Robinhood
                         response = await _client.GetAsync(endpoint);
                         break;
                     case Method.Post:
-                        response = await _client.PostAsync(_endpoint_login, content);
+                        response = await _client.PostAsync(endpoint, content);
                         break;
                 }
 
+                result.IsSuccessStatusCode = response.IsSuccessStatusCode;
                 result.StatusCode = response.StatusCode;
+                result.Content = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
-                { 
-                    string data = await response.Content.ReadAsStringAsync();
-                    result.Data = JsonConvert.DeserializeObject<T>(data, new JsonSerializerSettings() {
+                {                     
+                    result.Data = JsonConvert.DeserializeObject<T>(result.Content, new JsonSerializerSettings() {
                         NullValueHandling = NullValueHandling.Ignore
                     });
                 }

@@ -1,4 +1,4 @@
-# Deadlock.Robinhood (1.0.0.5)
+# Deadlock.Robinhood (1.0.2)
 
 Robinhood
 Free stock trading.
@@ -22,6 +22,8 @@ I'm not affiliated with the folks at Robinhood Markets Inc.
 * Get Positions
 * Get Portfolio
 * Get Orders
+* New Order
+* Cancel Order
 * Get Instrument
 * Get Quote
 
@@ -34,6 +36,8 @@ static string _token = "";
 static string _account = "";
 static string _username = "";
 static string _password = "";
+static string _instrumentTwitter = "https://api.robinhood.com/instruments/3a47ca97-d5a2-4a55-9045-053a588894de/";
+static string _orderId = "";
 ```
 
 ### Login with username and password
@@ -114,7 +118,7 @@ static async Task ListPositions()
 {
     using (RobinhoodClient client = new RobinhoodClient(_token))
     {
-        var result = await client.Positions(_account);
+        var result = await client.Positions();
         if (result.StatusCode == System.Net.HttpStatusCode.OK)
         {
             result.Data.Results.ForEach(position =>
@@ -133,10 +137,19 @@ static async Task GetPortfolio()
 {
     using (RobinhoodClient client = new RobinhoodClient(_token))
     {
-        var result = await client.Portfolio(_account);
-        if (result.StatusCode == System.Net.HttpStatusCode.OK)
+        var resultPortfolios = await client.Portfolios();
+        if (resultPortfolios.StatusCode == System.Net.HttpStatusCode.OK)
         {
-            Console.WriteLine(result.Data.MarketValue);
+            resultPortfolios.Data.Results.ForEach(portfolio =>
+                Console.WriteLine(portfolio.MarketValue)
+            );
+        }
+
+        //by accountNumber
+        var resultPortfolio = await client.Portfolios(UrlManager.GetAccountNumber(_account));
+        if (resultPortfolio.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            Console.WriteLine(resultPortfolio.Data.MarketValue);
         }
     }
 }
@@ -156,6 +169,51 @@ static async Task ListOrders()
             result.Data.Results.ForEach(order =>
                 Console.WriteLine(order.Price)
             );
+        }
+    }
+}
+```
+
+### New Order
+
+```c#
+
+static async Task NewOrder()
+{
+    using (RobinhoodClient client = new RobinhoodClient(_token))
+    {
+        var result = await client.Orders(new Model.NewOrder()
+        {
+            Account = _account,                 
+            Price = 10,
+            Quantity = 1,
+            Side = Model.Side.Buy,
+            TimeInForce = "gfd",
+            Trigger = "immediate",
+            Type = "market",
+            Symbol = "TWTR",
+            Instrument = _instrumentTwitter
+        });
+        if (result.IsSuccessStatusCode)
+        {
+            _orderId = result.Data.Id;
+        }
+    }
+}
+```
+
+### Cancel Order
+
+```c#
+
+static async Task CancelOrder()
+{
+    using (RobinhoodClient client = new RobinhoodClient(_token))
+    {
+        var result = await client.CancelOrder(_orderId);
+        if (result.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+
         }
     }
 }

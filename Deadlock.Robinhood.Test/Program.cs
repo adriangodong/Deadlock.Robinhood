@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Deadlock.Robinhood;
+using System.Text.RegularExpressions;
 
 namespace Deadlock.Robinhood.Test
 {
@@ -11,6 +12,8 @@ namespace Deadlock.Robinhood.Test
         static string _account = "";
         static string _username = "";
         static string _password = "";
+        static string _instrumentTwitter = "https://api.robinhood.com/instruments/3a47ca97-d5a2-4a55-9045-053a588894de/";
+        static string _orderId = "";
 
         static void Main(string[] args)
         {
@@ -25,15 +28,17 @@ namespace Deadlock.Robinhood.Test
 
         static async Task Test()
         {
-            await Login();
-            await LoginWithToken();
-            await GetUserInformations();
-            await ListAccounts();
-            await ListPositions();
-            await GetPortfolio();
-            await ListOrders();
-            await GetInstrument();
-            await GetQuote();
+            //await Login();
+            //await LoginWithToken();
+            //await GetUserInformations();
+            //await ListAccounts();
+            //await ListPositions();
+            //await GetPortfolios();
+            //await ListOrders();
+            //await NewOrder();
+            //await CancelOrder();
+            //await GetInstrument();
+            //await GetQuote();
         }
 
         static async Task Login()
@@ -90,7 +95,7 @@ namespace Deadlock.Robinhood.Test
         {
             using (RobinhoodClient client = new RobinhoodClient(_token))
             {
-                var result = await client.Positions(_account);
+                var result = await client.Positions();
                 if (result.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     result.Data.Results.ForEach(position =>
@@ -100,14 +105,23 @@ namespace Deadlock.Robinhood.Test
             }
         }
 
-        static async Task GetPortfolio()
+        static async Task GetPortfolios()
         {
             using (RobinhoodClient client = new RobinhoodClient(_token))
             {
-                var result = await client.Portfolio(_account);
-                if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                var resultPortfolios = await client.Portfolios();
+                if (resultPortfolios.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    Console.WriteLine(result.Data.MarketValue);
+                    resultPortfolios.Data.Results.ForEach(portfolio =>
+                        Console.WriteLine(portfolio.MarketValue)
+                    );
+                }
+
+                //by accountNumber
+                var resultPortfolio = await client.Portfolios(UrlManager.GetAccountNumber(_account));
+                if (resultPortfolio.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    Console.WriteLine(resultPortfolio.Data.MarketValue);
                 }
             }
         }
@@ -126,11 +140,46 @@ namespace Deadlock.Robinhood.Test
             }
         }
 
+        static async Task NewOrder()
+        {
+            using (RobinhoodClient client = new RobinhoodClient(_token))
+            {
+                var result = await client.Orders(new Model.NewOrder()
+                {
+                    Account = _account,                 
+                    Price = 10,
+                    Quantity = 1,
+                    Side = Model.Side.Buy,
+                    TimeInForce = "gfd",
+                    Trigger = "immediate",
+                    Type = "market",
+                    Symbol = "TWTR",
+                    Instrument = _instrumentTwitter
+                });
+                if (result.IsSuccessStatusCode)
+                {
+                    _orderId = result.Data.Id;
+                }
+            }
+        }
+
+        static async Task CancelOrder()
+        {
+            using (RobinhoodClient client = new RobinhoodClient(_token))
+            {
+                var result = await client.CancelOrder(_orderId);
+                if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+
+                }
+            }
+        }
+
         static async Task GetInstrument()
         {
             using (RobinhoodClient client = new RobinhoodClient(_token))
             {
-                var result = await client.Instrument("3a47ca97-d5a2-4a55-9045-053a588894de"); //twitter
+                var result = await client.Instrument(UrlManager.GetInstrumentNumber(_instrumentTwitter));
                 if (result.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     Console.WriteLine(result.Data.Name);

@@ -41,10 +41,12 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\StringEnumToLowerConverter.cs" />
     <Compile Include="Method.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Authentication.cs" />
     <Compile Include="Model\Instrument.cs" />
+    <Compile Include="Model\NewOrder.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderExecution.cs" />
     <Compile Include="Model\Page.cs" />
@@ -52,9 +54,11 @@
     <Compile Include="Model\Position.cs" />
     <Compile Include="Model\Quote.cs" />
     <Compile Include="Model\Result.cs" />
+    <Compile Include="Model\Side.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="RobinhoodClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UrlManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -9,6 +9,12 @@ namespace Deadlock.Robinhood.Model
 {
     public class Position
     {
+        [JsonProperty("account")]
+        public string Account { get; set; }
+
+        [JsonProperty("url")]
+        public string Url { get; set; }
+
         [JsonProperty("intraday_quantity")]
         public decimal IntradayQuantity { get; set; }
 

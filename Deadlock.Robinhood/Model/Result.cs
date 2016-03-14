@@ -9,7 +9,11 @@ namespace Deadlock.Robinhood.Model
 {
     public class Result<T>
     {
-        public HttpStatusCode StatusCode { get; set; }       
+        public string Content { get; set; }
+
+        public HttpStatusCode StatusCode { get; set; }
+
+        public bool IsSuccessStatusCode { get; set; }
 
         public T Data { get; set; }
     }

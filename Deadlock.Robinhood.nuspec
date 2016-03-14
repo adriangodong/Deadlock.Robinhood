@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package>
-  <metadata minClientVersion="3.0.0">
+  <metadata>
     <id>Deadlock.Robinhood</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <title>Deadlock Robinhood Client</title>
     <authors>Thiago Amarante</authors>
     <owners>thiagoamarante</owners>
