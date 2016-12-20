@@ -13,7 +13,7 @@ namespace Deadlock.Robinhood
     /// <summary>
     /// Inspirado em https://github.com/aurbano/robinhood-node
     /// </summary>
-    public class RobinhoodClient : IDisposable
+    public class RobinhoodClient : IRobinhoodClient, IDisposable
     {
         #region Fields
         private HttpClient _client;
