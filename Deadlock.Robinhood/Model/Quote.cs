@@ -36,13 +36,19 @@ namespace Deadlock.Robinhood.Model
         [JsonProperty("previous_close_date")]
         public DateTime PreviousCloseDate { get; set; }
 
-        [JsonProperty("updated_at")]
-        public DateTime UpdatedAt { get; set; }
-
         [JsonProperty("symbol")]
         public string Symbol { get; set; }
 
         [JsonProperty("trading_halted")]
         public bool TradingHalted { get; set; }
+
+        [JsonProperty("last_trade_price_source")]
+        public string LastTradePriceSource { get; set; }
+
+        [JsonProperty("updated_at")]
+        public DateTime UpdatedAt { get; set; }
+
+        [JsonProperty("instrument")]
+        public string Instrument { get; set; }
     }
 }
