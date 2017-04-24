@@ -15,6 +15,9 @@ namespace Deadlock.Robinhood.Model
         [JsonProperty("updated_at")]
         public DateTime UpdatedAt { get; set; }
 
+        [JsonProperty("created_at")]
+        public DateTime CreatedAt { get; set; }
+
         [JsonProperty("cash")]
         public decimal Cash { get; set; }
 
@@ -27,7 +30,16 @@ namespace Deadlock.Robinhood.Model
         [JsonProperty("type")]
         public string Type { get; set; }
 
+        [JsonProperty("cash_held_for_orders")]
+        public decimal CashHeldForOrders { get; set; }
+
         [JsonProperty("account_number")]
         public string AccountNumber { get; set; }
+
+        [JsonProperty("uncleared_deposits")]
+        public decimal UnclearedDeposits { get; set; }
+
+        [JsonProperty("unsettled_funds")]
+        public decimal UnsettledFunds { get; set; }
     }
 }
