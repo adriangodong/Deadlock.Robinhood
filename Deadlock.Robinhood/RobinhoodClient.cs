@@ -83,6 +83,15 @@ namespace Deadlock.Robinhood
             return await this.Request<Page<Order>>(UrlManager.Orders);
         }        
 
+        public async Task<Result<Page<Order>>> NextOrders(Page<Order> orders)
+        {
+            if (orders.Next == null) {
+                return null;
+            }
+            
+            return await this.Request<Page<Order>>(orders.Next);
+        }
+
         public async Task<Result<Order>> Orders(NewOrder newOrder)
         {
             var content = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(newOrder));           

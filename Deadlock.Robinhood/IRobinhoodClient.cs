@@ -14,6 +14,7 @@ namespace Deadlock.Robinhood
         Task<Result<Page<Portfolio>>> Portfolios();
         Task<Result<Portfolio>> Portfolios(string accountNumber);
         Task<Result<Page<Order>>> Orders();
+        Task<Result<Page<Order>>> NextOrders(Page<Order> orders);
         Task<Result<Order>> Orders(NewOrder newOrder);
         Task<Result<object>> CancelOrder(string orderNumber);
         Task<Result<Page<Position>>> Positions();
