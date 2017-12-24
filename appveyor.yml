@@ -1,0 +1,21 @@
+image: Visual Studio 2017
+configuration: Release
+version: '1.0.3-beta{build}'
+
+dotnet_csproj:
+  patch: true
+  file: 'Deadlock.Robinhood\Deadlock.Robinhood.csproj'
+  version: $(appveyor_build_version)
+
+before_build:
+- cmd: dotnet restore
+
+build:
+  project: Deadlock.Robinhood.sln
+
+test_script:
+  - cmd: dotnet test Deadlock.Robinhood.Tests/Deadlock.Robinhood.Tests.csproj
+
+artifacts:
+- path: '**/*.nupkg'
+  name: Nuget Packages

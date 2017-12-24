@@ -144,7 +144,7 @@ namespace Deadlock.Robinhood
         private async Task<Result<T>> Request<T>(string endpoint, Method method = Method.Get, HttpContent content = null, bool needAuthentication = true)
         {
             if (needAuthentication && !this.Authenticated)
-                throw new System.Security.Authentication.AuthenticationException("Requires authentication");
+                throw new InvalidOperationException("Requires authentication");
 
             Result<T> result = Activator.CreateInstance<Result<T>>();
             try

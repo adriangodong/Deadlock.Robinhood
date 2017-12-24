@@ -1,21 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.0.3</VersionPrefix>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
-    <DebugType>portable</DebugType>
+    <Title>Deadlock Robinhood Client</Title>
+    <Description>Robinhood Client is the way you manage your account via api with C#. Disclaimer: This is an unofficial client package. I'm not affiliated with the folks at Robinhood Markets Inc.</Description>
+    <Authors>Thiago Amarante</Authors>
+    <Owners>thiagoamarante</Owners>
+    <TargetFrameworks>netstandard1.1</TargetFrameworks>
     <AssemblyName>Deadlock.Robinhood</AssemblyName>
     <PackageId>Deadlock.Robinhood</PackageId>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
-    <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <PackageTags>trade;robinhood;stock</PackageTags>
+    <IncludeSymbols>True</IncludeSymbols>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>0.0.0</Version>
+    <PackageProjectUrl>https://github.com/thiagoamarante/Deadlock.Robinhood</PackageProjectUrl>
+    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <RepositoryUrl></RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

@@ -26,7 +26,7 @@ namespace Deadlock.Robinhood.Test
             Console.ReadLine();
         }
 
-        static async Task Test()
+        private static async Task Test()
         {
             //await Login();
             //await LoginWithToken();
